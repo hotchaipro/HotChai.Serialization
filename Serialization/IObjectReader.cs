@@ -50,9 +50,6 @@ namespace HotChai.Serialization
         /// </returns>
         bool MoveToNextMember();
 
-        [Obsolete("Use the MoveToNextMember method.")]
-        bool ReadNextMemberKey();
-
         /// <summary>
         /// Reads the end of a serialized object.
         /// </summary>
