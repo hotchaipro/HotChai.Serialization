@@ -1,4 +1,4 @@
-# HotChai.Bindings
+# HotChai.Serialization
 
 A cross-platform .NET library for efficiently serializing objects into a variety of formats.
 

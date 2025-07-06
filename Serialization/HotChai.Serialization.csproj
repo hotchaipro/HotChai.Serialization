@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<Version>1.6</Version>
+		<Title>$(AssemblyName)</Title>
+		<Authors>David Taylor</Authors>
+		<Company>Hot Chai Productions</Company>
+		<Description>A cross-platform library for efficiently serializing .NET types. Supports JSON, XML, Bencode, and PBON formats.</Description>
+		<RepositoryUrl>https://github.com/hotchaipro/HotChai.Serialization</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/hotchaipro/HotChai.Serialization</PackageProjectUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="**\*.projitems" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+	
+</Project>
