@@ -1,18 +1,14 @@
-Serialize.NET
-=============
+# HotChai.Bindings
 
-A cross-platform library for efficiently serializing objects into a variety of formats.
+A cross-platform .NET library for efficiently serializing objects into a variety of formats.
 
-Features
-========
+## Features
 
 * Simple and effective support for backward compatibility when adding new serialized object members.
 
 * Stream-based API doesn't require the entire object to reside in memory.
 
-* Supports a variety of serialization formats, including [JSON](http://json.org), [XML](http://en.wikipedia.org/wiki/XML), [Bencode](http://en.wikipedia.org/wiki/Bencode), and [PBON](http://pbon.info), with a single API.
-
-* Portable implementation supports all .NET runtimes including Mono, Xamarin.iOS, and Xamarin.Android.
+* Supports a variety of serialization formats, including [JSON](https://json.org), [XML](https://en.wikipedia.org/wiki/XML), [Bencode](https://en.wikipedia.org/wiki/Bencode), and [PBON](https://pbon.info), with a single API.
 
 * Visual Studio Shared Project support for easy inclusion of source code in your project.
 
@@ -22,7 +18,6 @@ Features
 
 * Suitable for extending into higher-level abstractions, for example, a messaging protocol.
 
-For more information
-====================
+## For more information
 
-See the [project wiki](https://github.com/hotchaipro/serialize.net/wiki).
+See the [Project Wiki](https://github.com/hotchaipro/HotChai.Serialization/wiki)
