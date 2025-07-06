@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,7 +26,7 @@ namespace HotChai.Serialization.Xml
 {
     public sealed class XmlObjectReader : ObjectReader
     {
-        private XmlReader _reader;
+        private XmlReader? _reader;
         private readonly InspectorStream _stream;
         private bool _peeking;
 
@@ -40,7 +41,7 @@ namespace HotChai.Serialization.Xml
             this._stream = new InspectorStream(stream);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get { return this._stream.Inspector; }
 
@@ -113,7 +114,7 @@ namespace HotChai.Serialization.Xml
                 throw new InvalidOperationException();
             }
 
-            string memberName = this.Reader.GetAttribute(XmlToken.MemberKeyAttribute);
+            string? memberName = this.Reader.GetAttribute(XmlToken.MemberKeyAttribute);
 
             this.MemberKey = int.Parse(memberName, CultureInfo.InvariantCulture);
 
@@ -213,7 +214,7 @@ namespace HotChai.Serialization.Xml
 
         protected override bool ReadPrimitiveValueAsBoolean()
         {
-            string valueContent = ReadPrimitiveValueAsString(1);
+            string? valueContent = ReadPrimitiveValueAsString(1);
 
             if (valueContent == "1")
             {
@@ -231,52 +232,53 @@ namespace HotChai.Serialization.Xml
 
         protected override int ReadPrimitiveValueAsInt32()
         {
-            string valueContent = ReadPrimitiveValueAsString(25);
+            string? valueContent = ReadPrimitiveValueAsString(25);
 
             return int.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
         protected override uint ReadPrimitiveValueAsUInt32()
         {
-            string valueContent = ReadPrimitiveValueAsString(25);
+            string? valueContent = ReadPrimitiveValueAsString(25);
 
             return uint.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
         protected override long ReadPrimitiveValueAsInt64()
         {
-            string valueContent = ReadPrimitiveValueAsString(50);
+            string? valueContent = ReadPrimitiveValueAsString(50);
 
             return long.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
         protected override ulong ReadPrimitiveValueAsUInt64()
         {
-            string valueContent = ReadPrimitiveValueAsString(50);
+            string? valueContent = ReadPrimitiveValueAsString(50);
 
             return ulong.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
         protected override float ReadPrimitiveValueAsSingle()
         {
-            string valueContent = ReadPrimitiveValueAsString(25);
+            string? valueContent = ReadPrimitiveValueAsString(25);
 
             return float.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
         protected override double ReadPrimitiveValueAsDouble()
         {
-            string valueContent = ReadPrimitiveValueAsString(25);
+            string? valueContent = ReadPrimitiveValueAsString(25);
 
             return double.Parse(valueContent, CultureInfo.InvariantCulture);
         }
 
-        protected override byte[] ReadPrimitiveValueAsBytes(int quota)
+        protected override byte[]? ReadPrimitiveValueAsBytes(
+            int quota)
         {
             // TODO: Consider CDATA
 
             // NOTE: Account for base-64 length expansion
-            string valueContent = ReadPrimitiveValueAsString(quota * 4 / 3 + 1);
+            string? valueContent = ReadPrimitiveValueAsString(quota * 4 / 3 + 1);
             if (null == valueContent)
             {
                 return null;
@@ -285,7 +287,8 @@ namespace HotChai.Serialization.Xml
             return Convert.FromBase64String(valueContent);
         }
 
-        protected override string ReadPrimitiveValueAsString(int quota)
+        protected override string? ReadPrimitiveValueAsString(
+            int quota)
         {
             ReadStartElement();
 

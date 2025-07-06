@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 #if NET5_0_OR_GREATER
 using System.Buffers;
@@ -33,7 +34,7 @@ namespace HotChai.Serialization.PortableBinary
 #if NET5_0_OR_GREATER
         private static readonly ArrayPool<byte> _BufferPool = ArrayPool<byte>.Shared;
 #else
-        private byte[] _skipBuffer;
+        private byte[]? _skipBuffer;
 #endif
         private readonly byte[] _oneByteBuffer = new byte[1];
 
@@ -57,7 +58,7 @@ namespace HotChai.Serialization.PortableBinary
             this._stream = new InspectorStream(stream);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {
@@ -373,7 +374,7 @@ namespace HotChai.Serialization.PortableBinary
         /// Reads the current value as an array of <c>Byte</c> type.
         /// </summary>
         /// <returns>The array of <c>Byte</c> value.</returns>
-        protected override byte[] ReadPrimitiveValueAsBytes(
+        protected override byte[]? ReadPrimitiveValueAsBytes(
             int quota)
         {
             int length = ReadNullablePrimitiveLength(quota);
@@ -393,7 +394,7 @@ namespace HotChai.Serialization.PortableBinary
         /// Reads the current value as a <c>String</c> type.
         /// </summary>
         /// <returns>The <c>String</c> value.</returns>
-        protected override string ReadPrimitiveValueAsString(
+        protected override string? ReadPrimitiveValueAsString(
             int quota)
         {
             int length = ReadNullablePrimitiveLength(quota);

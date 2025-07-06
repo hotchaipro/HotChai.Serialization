@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -39,7 +40,7 @@ namespace HotChai.Serialization.Bencoding
             this._writer = new BinaryWriter(this._stream, Encoding.UTF8);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {
@@ -57,7 +58,8 @@ namespace HotChai.Serialization.Bencoding
             this._writer.Write(BencodingToken.Dictionary);
         }
 
-        protected override void WriteStartMemberToken(int memberKey)
+        protected override void WriteStartMemberToken(
+            int memberKey)
         {
             // NOTE: Bencoding specification requires a string type key value
             WritePrimitiveValue(memberKey.ToString(CultureInfo.InvariantCulture));
@@ -87,7 +89,8 @@ namespace HotChai.Serialization.Bencoding
             this._writer.Write(BencodingToken.Null);
         }
 
-        protected override void WritePrimitiveValue(bool value)
+        protected override void WritePrimitiveValue(
+            bool value)
         {
             this._writer.Write(BencodingToken.Integer);
 
@@ -103,49 +106,56 @@ namespace HotChai.Serialization.Bencoding
             this._writer.Write(BencodingToken.End);
         }
 
-        protected override void WritePrimitiveValue(int value)
+        protected override void WritePrimitiveValue(
+            int value)
         {
             this._writer.Write(BencodingToken.Integer);
             WriteRaw(value.ToString(CultureInfo.InvariantCulture));
             this._writer.Write(BencodingToken.End);
         }
 
-        protected override void WritePrimitiveValue(uint value)
+        protected override void WritePrimitiveValue(
+            uint value)
         {
             this._writer.Write(BencodingToken.Integer);
             WriteRaw(value.ToString(CultureInfo.InvariantCulture));
             this._writer.Write(BencodingToken.End);
         }
 
-        protected override void WritePrimitiveValue(long value)
+        protected override void WritePrimitiveValue(
+            long value)
         {
             this._writer.Write(BencodingToken.Integer);
             WriteRaw(value.ToString(CultureInfo.InvariantCulture));
             this._writer.Write(BencodingToken.End);
         }
 
-        protected override void WritePrimitiveValue(ulong value)
+        protected override void WritePrimitiveValue(
+            ulong value)
         {
             this._writer.Write(BencodingToken.Integer);
             WriteRaw(value.ToString(CultureInfo.InvariantCulture));
             this._writer.Write(BencodingToken.End);
         }
 
-        protected override void WritePrimitiveValue(float value)
+        protected override void WritePrimitiveValue(
+            float value)
         {
             // NOTE: Bencoding does not explicitly support floats,
             // so we encode as a string.
             WritePrimitiveValue(value.ToString("R"));
         }
 
-        protected override void WritePrimitiveValue(double value)
+        protected override void WritePrimitiveValue(
+            double value)
         {
             // NOTE: Bencoding does not explicitly support floats,
             // so we encode as a string.
             WritePrimitiveValue(value.ToString("R"));
         }
 
-        protected override void WritePrimitiveValue(byte[] value)
+        protected override void WritePrimitiveValue(
+            byte[] value)
         {
             if (value == null)
             {
@@ -161,7 +171,9 @@ namespace HotChai.Serialization.Bencoding
             this._writer.Write(value);
         }
 
-        protected override void WritePrimitiveValue(ReadOnlySpan<byte> value)
+#if NET5_0_OR_GREATER
+        protected override void WritePrimitiveValue(
+            ReadOnlySpan<byte> value)
         {
             if (value == null)
             {
@@ -176,8 +188,10 @@ namespace HotChai.Serialization.Bencoding
             // Byte string
             this._writer.Write(value);
         }
+#endif
 
-        protected override void WritePrimitiveValue(string value)
+        protected override void WritePrimitiveValue(
+            string value)
         {
             if (value == null)
             {

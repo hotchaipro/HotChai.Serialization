@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.IO;
 
@@ -23,7 +24,7 @@ namespace HotChai.Serialization
     internal sealed class InspectorStream : Stream
     {
         private readonly Stream _innerStream;
-        private ISerializationInspector _inspector;
+        private ISerializationInspector? _inspector;
         private readonly byte[] _oneByteBuffer = new byte[1];
 
         public InspectorStream(
@@ -37,7 +38,7 @@ namespace HotChai.Serialization
             this._innerStream = stream;
         }
 
-        public ISerializationInspector Inspector
+        public ISerializationInspector? Inspector
         {
             get
             {

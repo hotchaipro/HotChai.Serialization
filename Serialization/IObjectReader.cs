@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 
 namespace HotChai.Serialization
@@ -24,7 +25,7 @@ namespace HotChai.Serialization
     /// </summary>
     public interface IObjectReader
     {
-        ISerializationInspector Inspector { get; set; }
+        ISerializationInspector? Inspector { get; set; }
 
         /// <summary>
         /// Gets the key of the current object member.
@@ -126,12 +127,12 @@ namespace HotChai.Serialization
         /// Reads the current value as an array of <c>Byte</c>.
         /// </summary>
         /// <returns>The array of <c>Byte</c> value.</returns>
-        Byte[] ReadValueAsBytes(int byteQuota);
+        Byte[]? ReadValueAsBytes(int byteQuota);
 
         /// <summary>
         /// Reads the current value as a <c>String</c> type.
         /// </summary>
         /// <returns>The <c>String</c> value.</returns>
-        String ReadValueAsString(int byteQuota);
+        String? ReadValueAsString(int byteQuota);
     }
 }

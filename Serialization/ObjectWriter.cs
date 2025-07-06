@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +34,7 @@ namespace HotChai.Serialization
             this._state.Push(InitialState.State);
         }
 
-        public abstract ISerializationInspector Inspector
+        public abstract ISerializationInspector? Inspector
         {
             get;
 

@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -41,7 +42,7 @@ namespace HotChai.Serialization.Bencoding
             this._reader = new BinaryReader(this._stream, Encoding.UTF8);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {
@@ -85,7 +86,7 @@ namespace HotChai.Serialization.Bencoding
             // Set the current object member key
             // NOTE: The official bencoding specification only allows 
             // string keys in dictionary encodings.
-            string memberKeyString = ReadPrimitiveValueAsString(15);
+            string? memberKeyString = ReadPrimitiveValueAsString(15);
             this.MemberKey = Int32.Parse(memberKeyString);
 
             return true;
@@ -294,19 +295,19 @@ namespace HotChai.Serialization.Bencoding
 
         protected override float ReadPrimitiveValueAsSingle()
         {
-            string stringValue = ReadPrimitiveValueAsString(15);
+            string? stringValue = ReadPrimitiveValueAsString(15);
 
             return float.Parse(stringValue);
         }
 
         protected override double ReadPrimitiveValueAsDouble()
         {
-            string stringValue = ReadPrimitiveValueAsString(30);
+            string? stringValue = ReadPrimitiveValueAsString(30);
 
             return double.Parse(stringValue);
         }
 
-        protected override byte[] ReadPrimitiveValueAsBytes(
+        protected override byte[]? ReadPrimitiveValueAsBytes(
             int quota)
         {
             char token = ReadToken();
@@ -337,10 +338,10 @@ namespace HotChai.Serialization.Bencoding
             return this._reader.ReadBytes(length);
         }
 
-        protected override string ReadPrimitiveValueAsString(
+        protected override string? ReadPrimitiveValueAsString(
             int quota)
         {
-            byte[] bytes = ReadPrimitiveValueAsBytes(quota);
+            byte[]? bytes = ReadPrimitiveValueAsBytes(quota);
             if (null == bytes)
             {
                 return null;

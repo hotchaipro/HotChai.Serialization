@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -56,7 +57,7 @@ namespace HotChai.Serialization.Json
             set;
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {
@@ -177,6 +178,7 @@ namespace HotChai.Serialization.Json
             }
         }
 
+#if NET5_0_OR_GREATER
         protected override void WritePrimitiveValue(
             ReadOnlySpan<byte> value)
         {
@@ -194,6 +196,7 @@ namespace HotChai.Serialization.Json
                 Write('"');
             }
         }
+#endif
 
         protected override void WritePrimitiveValue(
             string value)

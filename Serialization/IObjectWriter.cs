@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 
 namespace HotChai.Serialization
@@ -24,7 +25,7 @@ namespace HotChai.Serialization
     /// </summary>
     public interface IObjectWriter
     {
-        ISerializationInspector Inspector { get; set; }
+        ISerializationInspector? Inspector { get; set; }
 
         /// <summary>
         /// Writes the start of a serialized object.

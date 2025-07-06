@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,10 +37,9 @@ namespace HotChai.Serialization
             this._state.Push(InitialState.State);
         }
 
-        public abstract ISerializationInspector Inspector
+        public abstract ISerializationInspector? Inspector
         {
             get;
-
             set;
         }
 
@@ -65,12 +65,6 @@ namespace HotChai.Serialization
             this.MemberKey = InvalidMemberKey;
 
             return this.State.ReadStartObject(this);
-        }
-
-        [Obsolete("Use the MoveToNextMember method.")]
-        public bool ReadNextMemberKey()
-        {
-            return this.State.MoveToNextObjectMember(this);
         }
 
         /// <summary>
@@ -201,7 +195,7 @@ namespace HotChai.Serialization
         /// Reads the current value as an array of <c>Byte</c>.
         /// </summary>
         /// <returns>The array of <c>Byte</c> value.</returns>
-        public byte[] ReadValueAsBytes(
+        public byte[]? ReadValueAsBytes(
             int byteQuota)
         {
             this.State.ReadPrimitiveValue(this);
@@ -212,7 +206,7 @@ namespace HotChai.Serialization
         /// Reads the current value as a <c>String</c> type.
         /// </summary>
         /// <returns>The <c>String</c> value.</returns>
-        public string ReadValueAsString(
+        public string? ReadValueAsString(
             int byteQuota)
         {
             this.State.ReadPrimitiveValue(this);
@@ -281,7 +275,8 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool ReadStartObject(ObjectReader reader)
+            public override bool ReadStartObject(
+                ObjectReader reader)
             {
                 if (reader.ReadStartObjectToken())
                 {
@@ -295,7 +290,8 @@ namespace HotChai.Serialization
                     return false;
                 }
             }
-            public override bool ReadStartArray(ObjectReader reader)
+            public override bool ReadStartArray(
+                ObjectReader reader)
             {
                 if (reader.ReadStartArrayToken())
                 {
@@ -310,7 +306,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MemberValueType type = reader.PeekValueType();
                 if (type == MemberValueType.Object)
@@ -336,7 +333,8 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool MoveToNextObjectMember(ObjectReader reader)
+            public override bool MoveToNextObjectMember(
+                ObjectReader reader)
             {
                 // Try to read the first member key
                 if (reader.ReadFirstObjectMemberKey())
@@ -353,7 +351,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MoveToNextObjectMember(reader);
             }
@@ -367,14 +366,16 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool ReadStartObject(ObjectReader reader)
+            public override bool ReadStartObject(
+                ObjectReader reader)
             {
                 reader.SetState(MemberValueState.State);
 
                 return InitialState.State.ReadStartObject(reader);
             }
 
-            public override bool ReadStartArray(ObjectReader reader)
+            public override bool ReadStartArray(
+                ObjectReader reader)
             {
                 reader.SetState(MemberValueState.State);
 
@@ -391,12 +392,14 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void ReadPrimitiveValue(ObjectReader reader)
+            public override void ReadPrimitiveValue(
+                ObjectReader reader)
             {
                 reader.SetState(MemberValueState.State);
             }
 
-            public override bool MoveToNextObjectMember(ObjectReader reader)
+            public override bool MoveToNextObjectMember(
+                ObjectReader reader)
             {
                 // Skip the current value
                 reader.SkipValue();
@@ -405,7 +408,8 @@ namespace HotChai.Serialization
                 return MemberValueState.State.MoveToNextObjectMember(reader);
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MemberValueType type = reader.PeekValueType();
                 if (type == MemberValueType.Object)
@@ -436,7 +440,8 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool MoveToNextObjectMember(ObjectReader reader)
+            public override bool MoveToNextObjectMember(
+                ObjectReader reader)
             {
                 // Try to read the next member key
                 if (reader.ReadNextObjectMemberKey())
@@ -453,7 +458,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MoveToNextObjectMember(reader);
             }
@@ -467,13 +473,15 @@ namespace HotChai.Serialization
             {
             }
 
-            public override void ReadEndObject(ObjectReader reader)
+            public override void ReadEndObject(
+                ObjectReader reader)
             {
                 reader.ReadEndObjectToken();
                 reader.PopState();
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 ReadEndObject(reader);
             }
@@ -487,7 +495,8 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool MoveToNextArrayValue(ObjectReader reader)
+            public override bool MoveToNextArrayValue(
+                ObjectReader reader)
             {
                 // Check for the end of the array
                 if (reader.ReadToFirstArrayValue())
@@ -502,7 +511,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MoveToNextArrayValue(reader);
             }
@@ -516,14 +526,16 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool ReadStartObject(ObjectReader reader)
+            public override bool ReadStartObject(
+                ObjectReader reader)
             {
                 reader.SetState(EndArrayValueState.State);
 
                 return InitialState.State.ReadStartObject(reader);
             }
 
-            public override bool ReadStartArray(ObjectReader reader)
+            public override bool ReadStartArray(
+                ObjectReader reader)
             {
                 reader.SetState(EndArrayValueState.State);
 
@@ -540,12 +552,14 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void ReadPrimitiveValue(ObjectReader reader)
+            public override void ReadPrimitiveValue(
+                ObjectReader reader)
             {
                 reader.SetState(EndArrayValueState.State);
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MemberValueType type = reader.PeekValueType();
                 if (type == MemberValueType.Object)
@@ -567,7 +581,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override bool MoveToNextArrayValue(ObjectReader reader)
+            public override bool MoveToNextArrayValue(
+                ObjectReader reader)
             {
                 // Skip the current value
                 reader.SkipValue();
@@ -585,7 +600,8 @@ namespace HotChai.Serialization
             {
             }
 
-            public override bool MoveToNextArrayValue(ObjectReader reader)
+            public override bool MoveToNextArrayValue(
+                ObjectReader reader)
             {
                 // Check for the end of the array
                 if (reader.ReadToNextArrayValue())
@@ -600,7 +616,8 @@ namespace HotChai.Serialization
                 }
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 MoveToNextArrayValue(reader);
             }
@@ -614,13 +631,15 @@ namespace HotChai.Serialization
             {
             }
 
-            public override void ReadEndArray(ObjectReader reader)
+            public override void ReadEndArray(
+                ObjectReader reader)
             {
                 reader.ReadEndArrayToken();
                 reader.PopState();
             }
 
-            public override void Skip(ObjectReader reader)
+            public override void Skip(
+                ObjectReader reader)
             {
                 ReadEndArray(reader);
             }
@@ -796,13 +815,13 @@ namespace HotChai.Serialization
         /// Reads the current value as an array of <c>Byte</c> type.
         /// </summary>
         /// <returns>The array of <c>Byte</c> value.</returns>
-        protected abstract byte[] ReadPrimitiveValueAsBytes(int quota);
+        protected abstract byte[]? ReadPrimitiveValueAsBytes(int quota);
 
         /// <summary>
         /// Reads the current value as a <c>String</c> type.
         /// </summary>
         /// <returns>The <c>String</c> value.</returns>
-        protected abstract string ReadPrimitiveValueAsString(int quota);
+        protected abstract string? ReadPrimitiveValueAsString(int quota);
 
         /// <summary>
         /// Returns the <c>MemberType</c> of the value at the current 

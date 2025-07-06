@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Collections.Generic;
 
@@ -48,7 +49,8 @@ namespace HotChai.Serialization
             }
         }
 
-        public static ObjectReaderExtension GetObject(this IObjectReader reader)
+        public static ObjectReaderExtension? GetObject(
+            this IObjectReader reader)
         {
             if (null == reader)
             {
@@ -201,7 +203,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<bool> GetBooleanArrayValues(
+        public static IEnumerable<bool>? GetBooleanArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -231,7 +233,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<int> GetInt32ArrayValues(
+        public static IEnumerable<int>? GetInt32ArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -261,7 +263,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<uint> GetUInt32ArrayValues(
+        public static IEnumerable<uint>? GetUInt32ArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -291,7 +293,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<long> GetInt64ArrayValues(
+        public static IEnumerable<long>? GetInt64ArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -321,7 +323,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<ulong> GetUInt64ArrayValues(
+        public static IEnumerable<ulong>? GetUInt64ArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -351,7 +353,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<float> GetSingleArrayValues(
+        public static IEnumerable<float>? GetSingleArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -381,7 +383,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<double> GetDoubleArrayValues(
+        public static IEnumerable<double>? GetDoubleArrayValues(
             this IObjectReader reader)
         {
             if (null == reader)
@@ -415,7 +417,7 @@ namespace HotChai.Serialization
             }
         }
 
-        public static IEnumerable<string> GetStringArrayValues(
+        public static IEnumerable<string>? GetStringArrayValues(
             this IObjectReader reader,
             int itemQuota)
         {
@@ -436,7 +438,7 @@ namespace HotChai.Serialization
 
         #region List readers
 
-        public static List<bool> ReadValueAsBooleanList(
+        public static List<bool>? ReadValueAsBooleanList(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -444,7 +446,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<bool> list = null;
+            List<bool>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -461,7 +463,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<int> ReadValueAsInt32List(
+        public static List<int>? ReadValueAsInt32List(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -469,7 +471,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<int> list = null;
+            List<int>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -486,7 +488,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<uint> ReadValueAsUInt32List(
+        public static List<uint>? ReadValueAsUInt32List(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -494,7 +496,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<uint> list = null;
+            List<uint>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -511,7 +513,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<long> ReadValueAsInt64List(
+        public static List<long>? ReadValueAsInt64List(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -519,7 +521,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<long> list = null;
+            List<long>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -536,7 +538,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<ulong> ReadValueAsUInt64List(
+        public static List<ulong>? ReadValueAsUInt64List(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -544,7 +546,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<ulong> list = null;
+            List<ulong>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -561,7 +563,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<float> ReadValueAsSingleList(
+        public static List<float>? ReadValueAsSingleList(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -569,7 +571,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<float> list = null;
+            List<float>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -586,7 +588,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<double> ReadValueAsDoubleList(
+        public static List<double>? ReadValueAsDoubleList(
             this IObjectReader reader)
         {
             if (reader == null)
@@ -594,7 +596,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<double> list = null;
+            List<double>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -611,7 +613,7 @@ namespace HotChai.Serialization
             return list;
         }
 
-        public static List<string> ReadValueAsStringList(
+        public static List<string>? ReadValueAsStringList(
             this IObjectReader reader,
             int itemQuota)
         {
@@ -620,7 +622,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            List<string> list = null;
+            List<string>? list = null;
 
             if (reader.ReadStartArray())
             {
@@ -641,10 +643,10 @@ namespace HotChai.Serialization
 
         #region Array readers
 
-        public static bool[] ReadValueAsBooleanArray(
+        public static bool[]? ReadValueAsBooleanArray(
             this IObjectReader reader)
         {
-            List<bool> list = ReadValueAsBooleanList(reader);
+            List<bool>? list = ReadValueAsBooleanList(reader);
 
             if (list == null)
             {
@@ -654,10 +656,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static int[] ReadValueAsInt32Array(
+        public static int[]? ReadValueAsInt32Array(
             this IObjectReader reader)
         {
-            List<int> list = ReadValueAsInt32List(reader);
+            List<int>? list = ReadValueAsInt32List(reader);
 
             if (list == null)
             {
@@ -667,10 +669,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static uint[] ReadValueAsUInt32Array(
+        public static uint[]? ReadValueAsUInt32Array(
             this IObjectReader reader)
         {
-            List<uint> list = ReadValueAsUInt32List(reader);
+            List<uint>? list = ReadValueAsUInt32List(reader);
 
             if (list == null)
             {
@@ -680,10 +682,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static long[] ReadValueAsInt64Array(
+        public static long[]? ReadValueAsInt64Array(
             this IObjectReader reader)
         {
-            List<long> list = ReadValueAsInt64List(reader);
+            List<long>? list = ReadValueAsInt64List(reader);
 
             if (list == null)
             {
@@ -693,10 +695,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static ulong[] ReadValueAsUInt64Array(
+        public static ulong[]? ReadValueAsUInt64Array(
             this IObjectReader reader)
         {
-            List<ulong> list = ReadValueAsUInt64List(reader);
+            List<ulong>? list = ReadValueAsUInt64List(reader);
 
             if (list == null)
             {
@@ -706,10 +708,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static float[] ReadValueAsSingleArray(
+        public static float[]? ReadValueAsSingleArray(
             this IObjectReader reader)
         {
-            List<float> list = ReadValueAsSingleList(reader);
+            List<float>? list = ReadValueAsSingleList(reader);
 
             if (list == null)
             {
@@ -719,10 +721,10 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static double[] ReadValueAsDoubleArray(
+        public static double[]? ReadValueAsDoubleArray(
             this IObjectReader reader)
         {
-            List<double> list = ReadValueAsDoubleList(reader);
+            List<double>? list = ReadValueAsDoubleList(reader);
 
             if (list == null)
             {
@@ -732,11 +734,11 @@ namespace HotChai.Serialization
             return list.ToArray();
         }
 
-        public static string[] ReadValueAsStringArray(
+        public static string[]? ReadValueAsStringArray(
             this IObjectReader reader,
             int itemQuota)
         {
-            List<string> list = ReadValueAsStringList(reader, itemQuota);
+            List<string>? list = ReadValueAsStringList(reader, itemQuota);
 
             if (list == null)
             {
@@ -758,7 +760,7 @@ namespace HotChai.Serialization
                 throw new ArgumentNullException("reader");
             }
 
-            byte[] guidBytes = reader.ReadValueAsBytes(16);
+            byte[]? guidBytes = reader.ReadValueAsBytes(16);
             return new Guid(guidBytes);
         }
 

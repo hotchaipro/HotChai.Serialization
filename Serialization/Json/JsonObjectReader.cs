@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -57,7 +58,7 @@ namespace HotChai.Serialization.Json
                 detectEncodingFromByteOrderMarks: true);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {
@@ -96,7 +97,7 @@ namespace HotChai.Serialization.Json
                 return false;
             }
 
-            string memberName = ReadString(20, false);
+            string memberName = ReadString(20, allowNull: false)!;
             this.MemberKey = int.Parse(memberName, CultureInfo.InvariantCulture);
 
             ReadColon();
@@ -119,7 +120,7 @@ namespace HotChai.Serialization.Json
 
             SkipWhiteSpace();
 
-            string memberName = ReadString(20, false);
+            string memberName = ReadString(20, allowNull: false)!;
             this.MemberKey = int.Parse(memberName, CultureInfo.InvariantCulture);
 
             ReadColon();
@@ -244,11 +245,11 @@ namespace HotChai.Serialization.Json
             return double.Parse(number, CultureInfo.InvariantCulture);
         }
 
-        protected override byte[] ReadPrimitiveValueAsBytes(
+        protected override byte[]? ReadPrimitiveValueAsBytes(
             int byteQuota)
         {
             // NOTE: Increase quota to account for Base64 expansion
-            string base64 = ReadString(byteQuota * 4 / 3 + 2, true);
+            string? base64 = ReadString(byteQuota * 4 / 3 + 2, allowNull: true);
             if (base64 == null)
             {
                 return null;
@@ -257,10 +258,10 @@ namespace HotChai.Serialization.Json
             return Convert.FromBase64String(base64);
         }
 
-        protected override string ReadPrimitiveValueAsString(
+        protected override string? ReadPrimitiveValueAsString(
             int byteQuota)
         {
-            return ReadString(Encoding.UTF8.GetMaxCharCount(byteQuota), true);
+            return ReadString(Encoding.UTF8.GetMaxCharCount(byteQuota), allowNull: true);
         }
 
         protected override MemberValueType PeekValueType()
@@ -478,7 +479,7 @@ namespace HotChai.Serialization.Json
             ReadToken(JsonToken.Comma);
         }
 
-        private string ReadString(
+        private string? ReadString(
             int charQuota,
             bool allowNull)
         {
@@ -605,7 +606,7 @@ namespace HotChai.Serialization.Json
         private void SkipString()
         {
             // TODO: Efficient skipping
-            ReadString(1024 * 1024, false);
+            ReadString(1024 * 1024, allowNull: false);
         }
 
         private char PeekChar()

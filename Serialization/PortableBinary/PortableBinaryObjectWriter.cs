@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 #if NET5_0_OR_GREATER
 using System.Buffers.Binary;
@@ -41,7 +42,7 @@ namespace HotChai.Serialization.PortableBinary
             this._writer = new BinaryWriter(this._stream);
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get
             {

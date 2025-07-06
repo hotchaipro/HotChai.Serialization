@@ -15,6 +15,7 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #endregion License
+#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -47,7 +48,7 @@ namespace HotChai.Serialization.Xml
             });
         }
 
-        public override ISerializationInspector Inspector
+        public override ISerializationInspector? Inspector
         {
             get { return this._stream.Inspector; }
 
@@ -59,7 +60,8 @@ namespace HotChai.Serialization.Xml
             this._writer.WriteStartElement(XmlToken.ObjectElement);
         }
 
-        protected override void WriteStartMemberToken(int memberKey)
+        protected override void WriteStartMemberToken(
+            int memberKey)
         {
             this._writer.WriteStartElement(XmlToken.MemberElement);
             this._writer.WriteAttributeString(XmlToken.MemberKeyAttribute, memberKey.ToString(CultureInfo.InvariantCulture));
@@ -104,49 +106,56 @@ namespace HotChai.Serialization.Xml
             }
         }
 
-        protected override void WritePrimitiveValue(int value)
+        protected override void WritePrimitiveValue(
+            int value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value);
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(uint value)
+        protected override void WritePrimitiveValue(
+            uint value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value);
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(long value)
+        protected override void WritePrimitiveValue(
+            long value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value);
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(ulong value)
+        protected override void WritePrimitiveValue(
+            ulong value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value.ToString(CultureInfo.InvariantCulture));
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(float value)
+        protected override void WritePrimitiveValue(
+            float value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value);
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(double value)
+        protected override void WritePrimitiveValue(
+            double value)
         {
             this._writer.WriteStartElement(XmlToken.ValueElement);
             this._writer.WriteValue(value);
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(byte[] value)
+        protected override void WritePrimitiveValue(
+            byte[] value)
         {
             if (null == value)
             {
@@ -159,7 +168,9 @@ namespace HotChai.Serialization.Xml
             this._writer.WriteEndElement();
         }
 
-        protected override void WritePrimitiveValue(ReadOnlySpan<byte> value)
+#if NET5_0_OR_GREATER
+        protected override void WritePrimitiveValue(
+            ReadOnlySpan<byte> value)
         {
             if (null == value)
             {
@@ -173,8 +184,10 @@ namespace HotChai.Serialization.Xml
             this._writer.WriteString(encodedString);
             this._writer.WriteEndElement();
         }
+#endif
 
-        protected override void WritePrimitiveValue(string value)
+        protected override void WritePrimitiveValue(
+            string value)
         {
             if (null == value)
             {
