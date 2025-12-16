@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>disable</Nullable>
-		<Version>1.6</Version>
+		<Version>1.6.1</Version>
 		<Title>$(AssemblyName)</Title>
 		<Authors>David Taylor</Authors>
 		<Company>Hot Chai Productions</Company>
