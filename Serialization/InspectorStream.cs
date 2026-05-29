@@ -18,6 +18,8 @@
 #nullable enable
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HotChai.Serialization
 {
@@ -66,9 +68,31 @@ namespace HotChai.Serialization
             get { return this._innerStream.CanWrite; }
         }
 
+        public override bool CanTimeout
+        {
+            get { return this._innerStream.CanTimeout; }
+        }
+
+        public override int ReadTimeout
+        {
+            get { return this._innerStream.ReadTimeout; }
+            set { this._innerStream.ReadTimeout = value; }
+        }
+
+        public override int WriteTimeout
+        {
+            get { return this._innerStream.WriteTimeout; }
+            set { this._innerStream.WriteTimeout = value; }
+        }
+
         public override void Flush()
         {
             this._innerStream.Flush();
+        }
+
+        public override Task FlushAsync(CancellationToken cancellationToken)
+        {
+            return this._innerStream.FlushAsync(cancellationToken);
         }
 
         public override long Length
@@ -113,6 +137,33 @@ namespace HotChai.Serialization
             return this._oneByteBuffer[0];
         }
 
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            return base.ReadAsync(buffer, offset, count, cancellationToken);
+        }
+
+        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
+        {
+            return base.BeginRead(buffer, offset, count, callback, state);
+        }
+
+        public override int EndRead(IAsyncResult asyncResult)
+        {
+            return base.EndRead(asyncResult);
+        }
+
+#if !NETSTANDARD2_0
+        public override void CopyTo(Stream destination, int bufferSize)
+        {
+            base.CopyTo(destination, bufferSize);
+        }
+#endif
+
+        public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
+        {
+            return base.CopyToAsync(destination, bufferSize, cancellationToken);
+        }
+
         public override long Seek(long offset, SeekOrigin origin)
         {
             if (!(this._inspector is null))
@@ -135,6 +186,34 @@ namespace HotChai.Serialization
             this._innerStream.Write(buffer, offset, count);
 
             this._inspector?.AddContent(buffer, offset, count);
+        }
+
+        public override void WriteByte(byte value)
+        {
+            this._oneByteBuffer[0] = value;
+            this._innerStream.Write(this._oneByteBuffer, 0, 1);
+            this._inspector?.AddContent(this._oneByteBuffer, 0, 1);
+        }
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            return base.WriteAsync(buffer, offset, count, cancellationToken);
+        }
+
+        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
+        {
+            return base.BeginWrite(buffer, offset, count, callback, state);
+        }
+
+        public override void EndWrite(IAsyncResult asyncResult)
+        {
+            base.EndWrite(asyncResult);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // The inner stream is owned by the caller; do not dispose it here.
+            base.Dispose(disposing);
         }
     }
 }
