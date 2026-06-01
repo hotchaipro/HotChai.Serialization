@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 // Copyright (c) 2014, David Taylor
 //
 // Permission to use, copy, modify, and/or distribute this software for any 
@@ -166,7 +166,7 @@ namespace HotChai.Serialization
             {
             }
 
-            object System.Collections.IEnumerator.Current
+            object? System.Collections.IEnumerator.Current
             {
                 get { return this.Current; }
             }
@@ -413,7 +413,7 @@ namespace HotChai.Serialization
 
             public override string Current
             {
-                get { return this.Reader.ReadValueAsString(this._itemQuota); }
+                get { return this.Reader.ReadValueAsString(this._itemQuota)!; }
             }
         }
 
@@ -630,7 +630,8 @@ namespace HotChai.Serialization
 
                 while (reader.MoveToNextArrayValue())
                 {
-                    list.Add(reader.ReadValueAsString(itemQuota));
+                    var value = reader.ReadValueAsString(itemQuota);
+                    list.Add(value!);
                 }
 
                 reader.ReadEndArray();
@@ -761,7 +762,7 @@ namespace HotChai.Serialization
             }
 
             byte[]? guidBytes = reader.ReadValueAsBytes(16);
-            return new Guid(guidBytes);
+            return new Guid(guidBytes ?? throw new InvalidOperationException("Guid bytes cannot be null"));
         }
 
         public static TimeSpan ReadValueAsTimeSpan(

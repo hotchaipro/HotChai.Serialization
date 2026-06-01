@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 // Copyright (c) 2014, David Taylor
 //
 // Permission to use, copy, modify, and/or distribute this software for any 
@@ -182,7 +182,7 @@ namespace HotChai.Serialization.Json
         protected override void WritePrimitiveValue(
             ReadOnlySpan<byte> value)
         {
-            if (null == value)
+            if (value.IsEmpty)
             {
                 WritePrimitiveNullValue();
             }

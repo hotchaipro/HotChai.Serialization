@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 // Copyright (c) 2014, David Taylor
 //
 // Permission to use, copy, modify, and/or distribute this software for any 
@@ -116,7 +116,7 @@ namespace HotChai.Serialization.Xml
 
             string? memberName = this.Reader.GetAttribute(XmlToken.MemberKeyAttribute);
 
-            this.MemberKey = int.Parse(memberName, CultureInfo.InvariantCulture);
+            this.MemberKey = int.Parse(memberName ?? throw new InvalidOperationException("Member key cannot be null"), CultureInfo.InvariantCulture);
 
             return true;
         }
@@ -234,42 +234,42 @@ namespace HotChai.Serialization.Xml
         {
             string? valueContent = ReadPrimitiveValueAsString(25);
 
-            return int.Parse(valueContent, CultureInfo.InvariantCulture);
+            return int.Parse(valueContent ?? throw new InvalidOperationException("Int32 value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override uint ReadPrimitiveValueAsUInt32()
         {
             string? valueContent = ReadPrimitiveValueAsString(25);
 
-            return uint.Parse(valueContent, CultureInfo.InvariantCulture);
+            return uint.Parse(valueContent ?? throw new InvalidOperationException("UInt32 value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override long ReadPrimitiveValueAsInt64()
         {
             string? valueContent = ReadPrimitiveValueAsString(50);
 
-            return long.Parse(valueContent, CultureInfo.InvariantCulture);
+            return long.Parse(valueContent ?? throw new InvalidOperationException("Int64 value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override ulong ReadPrimitiveValueAsUInt64()
         {
             string? valueContent = ReadPrimitiveValueAsString(50);
 
-            return ulong.Parse(valueContent, CultureInfo.InvariantCulture);
+            return ulong.Parse(valueContent ?? throw new InvalidOperationException("UInt64 value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override float ReadPrimitiveValueAsSingle()
         {
             string? valueContent = ReadPrimitiveValueAsString(25);
 
-            return float.Parse(valueContent, CultureInfo.InvariantCulture);
+            return float.Parse(valueContent ?? throw new InvalidOperationException("Single value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override double ReadPrimitiveValueAsDouble()
         {
             string? valueContent = ReadPrimitiveValueAsString(25);
 
-            return double.Parse(valueContent, CultureInfo.InvariantCulture);
+            return double.Parse(valueContent ?? throw new InvalidOperationException("Double value cannot be null"), CultureInfo.InvariantCulture);
         }
 
         protected override byte[]? ReadPrimitiveValueAsBytes(

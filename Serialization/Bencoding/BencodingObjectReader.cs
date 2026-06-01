@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 // Copyright (c) 2014, David Taylor
 //
 // Permission to use, copy, modify, and/or distribute this software for any 
@@ -87,7 +87,7 @@ namespace HotChai.Serialization.Bencoding
             // NOTE: The official bencoding specification only allows 
             // string keys in dictionary encodings.
             string? memberKeyString = ReadPrimitiveValueAsString(15);
-            this.MemberKey = Int32.Parse(memberKeyString);
+            this.MemberKey = Int32.Parse(memberKeyString ?? throw new InvalidOperationException("Member key cannot be null"));
 
             return true;
         }
@@ -297,14 +297,14 @@ namespace HotChai.Serialization.Bencoding
         {
             string? stringValue = ReadPrimitiveValueAsString(15);
 
-            return float.Parse(stringValue);
+            return float.Parse(stringValue ?? throw new InvalidOperationException("Float value cannot be null"));
         }
 
         protected override double ReadPrimitiveValueAsDouble()
         {
             string? stringValue = ReadPrimitiveValueAsString(30);
 
-            return double.Parse(stringValue);
+            return double.Parse(stringValue ?? throw new InvalidOperationException("Double value cannot be null"));
         }
 
         protected override byte[]? ReadPrimitiveValueAsBytes(
